@@ -10,6 +10,6 @@ class CreateGroups < ActiveRecord::Migration[7.2]
     end
 
     add_index :groups, :invite_token, unique: true
-    add_index :groups, [:is_guest, :expires_at]
+    add_index :groups, [ :is_guest, :expires_at ]
   end
 end
