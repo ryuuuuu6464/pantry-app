@@ -30,9 +30,7 @@ commands:
   save_bundle_cache:
     steps:
       - save_cache:
-          keys:
-            - bundle-{{ checksum ".ruby-version" }}-{{ checksum "Gemfile.lock" }}
-
+          key: bundle-{{ checksum ".ruby-version" }}-{{ checksum "Gemfile.lock" }}
           paths:
             - vendor/bundle
             - .bundle
