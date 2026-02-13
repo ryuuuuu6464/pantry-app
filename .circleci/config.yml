@@ -56,7 +56,18 @@ jobs:
           paths:
             - .
 
-  test:
+  rubocop:
+    executor: ruby
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - restore_bundle_cache
+      - run:
+          name: Rubocop
+          command: |
+            bundle exec rubocop
+
+  rspec:
     executor: ruby_and_postgres
     steps:
       - attach_workspace:
@@ -72,9 +83,12 @@ jobs:
             bundle exec rspec
 
 workflows:
-  build_and_test:
+  build_rubocop_rspec:
     jobs:
       - build
-      - test:
+      - rubocop:
           requires:
             - build
+      - rspec:
+          requires:
+            - rubocop
