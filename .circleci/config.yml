@@ -25,13 +25,14 @@ commands:
     steps:
       - restore_cache:
           keys:
-            - bundle-{{ checksum "Gemfile.lock" }}
-            - bundle-
+            - bundle-{{ checksum ".ruby-version" }}-{{ checksum "Gemfile.lock" }}
 
   save_bundle_cache:
     steps:
       - save_cache:
-          key: bundle-{{ checksum "Gemfile.lock" }}
+          keys:
+            - bundle-{{ checksum ".ruby-version" }}-{{ checksum "Gemfile.lock" }}
+
           paths:
             - vendor/bundle
             - .bundle
