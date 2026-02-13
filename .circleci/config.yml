@@ -1,0 +1,81 @@
+version: 2.1
+
+executors:
+  ruby:
+    docker:
+      - image: cimg/ruby:3.3.3
+    environment:
+      RAILS_ENV: test
+
+  ruby_and_postgres:
+    docker:
+      - image: cimg/ruby:3.3.3
+        environment:
+          DATABASE_URL: postgres://testuser:password@localhost:5432/pantry_app_test
+      - image: cimg/postgres:16.0
+        environment:
+          POSTGRES_USER: testuser
+          POSTGRES_DB: pantry_app_test
+          POSTGRES_PASSWORD: password
+    environment:
+      RAILS_ENV: test
+
+commands:
+  restore_bundle_cache:
+    steps:
+      - restore_cache:
+          keys:
+            - bundle-{{ checksum "Gemfile.lock" }}
+            - bundle-
+
+  save_bundle_cache:
+    steps:
+      - save_cache:
+          key: bundle-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+            - .bundle
+
+  bundle_install:
+    steps:
+      - run:
+          name: Bundle install
+          command: |
+            bundle config set path 'vendor/bundle'
+            bundle check || bundle install --jobs 4 --retry 3
+
+jobs:
+  build:
+    executor: ruby
+    steps:
+      - checkout
+      - restore_bundle_cache
+      - bundle_install
+      - save_bundle_cache
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - .
+
+  test:
+    executor: ruby_and_postgres
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - restore_bundle_cache
+      - run:
+          name: DB prepare
+          command: |
+            bin/rails db:prepare
+      - run:
+          name: RSpec
+          command: |
+            bundle exec rspec
+
+workflows:
+  build_and_test:
+    jobs:
+      - build
+      - test:
+          requires:
+            - build
