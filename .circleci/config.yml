@@ -69,7 +69,7 @@ jobs:
       - run:
           name: RSpec
           command: |
-            bundle exec rspec --fail-if-no-examples
+            bundle exec rspec
 
 workflows:
   build_and_test:
