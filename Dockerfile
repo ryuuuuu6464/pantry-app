@@ -25,8 +25,7 @@ RUN apt-get update -qq && \
     rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Dev: Set development environment
-ENV RAILS_ENV="development" \
-    BUNDLE_DEPLOYMENT="" \
+ENV BUNDLE_DEPLOYMENT="" \
     BUNDLE_WITHOUT=""
 
 # Dev: Install application gems

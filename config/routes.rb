@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "home/index"
   devise_for :users
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -12,5 +13,11 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  root to: redirect("/users/sign_in")
+  authenticated :user do
+    root to: "home#index", as: :authenticated_root
+  end
+
+  unauthenticated do
+    root to: redirect("/users/sign_in"), as: :unauthenticated_root
+  end
 end
