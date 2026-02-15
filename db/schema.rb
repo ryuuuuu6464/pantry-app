@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2026_02_11_065739) do
+ActiveRecord::Schema[7.2].define(version: 2026_02_15_065043) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -27,11 +27,9 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_11_065739) do
     t.string "name", null: false
     t.string "invite_token", limit: 24, null: false
     t.boolean "is_guest", default: false, null: false
-    t.datetime "expires_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["invite_token"], name: "index_groups_on_invite_token", unique: true
-    t.index ["is_guest", "expires_at"], name: "index_groups_on_is_guest_and_expires_at"
   end
 
   create_table "inventories", force: :cascade do |t|
@@ -78,5 +76,5 @@ ActiveRecord::Schema[7.2].define(version: 2026_02_11_065739) do
   add_foreign_key "inventories", "items", on_delete: :cascade
   add_foreign_key "items", "categories", on_delete: :cascade
   add_foreign_key "items", "groups", on_delete: :cascade
-  add_foreign_key "users", "groups", on_delete: :cascade
+  add_foreign_key "users", "groups", on_delete: :nullify
 end
