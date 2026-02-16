@@ -4,8 +4,8 @@ class ApplicationController < ActionController::Base
 
   def check_guest
     email = resource&.email || params[:user][:email].downcase
-    if email == 'guest@example.com'
-      redirect_to root_path, alert: 'ゲストユーザーの編集・削除はできません。'
+    if email == "guest@example.com"
+      redirect_to root_path, alert: "ゲストユーザーの編集・削除はできません。"
     end
   end
 
@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name])
-    devise_parameter_sanitizer.permit(:account_update, keys: [:name])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [ :name ])
+    devise_parameter_sanitizer.permit(:account_update, keys: [ :name ])
   end
 end

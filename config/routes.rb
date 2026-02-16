@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
   get "home/index"
   devise_for :users, controllers: {
-    registrations: 'users/registrations',
-    passwords: 'users/passwords'
+    registrations: "users/registrations",
+    passwords: "users/passwords"
   }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
@@ -16,8 +16,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
-  root 'homes#index'
+  root "homes#index"
   devise_scope :user do
-    post '/users/guest_sign_in', to: 'users/sessions#new_guest'
+    post "/users/guest_sign_in", to: "users/sessions#new_guest"
   end
 end
