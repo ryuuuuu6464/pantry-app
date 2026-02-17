@@ -6,6 +6,9 @@ class User < ApplicationRecord
 
   # 1ユーザーは1グループに所属（未所属でも可）
   belongs_to :group, optional: true
+  # Userモデルのバリデーション
+  # name必須
+  validates :name, presence: true, length: { in: 1..10 }
   # ゲストユーザー
   def self.guest
     find_or_create_by(email: "guest@example.com") do |user|

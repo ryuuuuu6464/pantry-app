@@ -3,8 +3,8 @@ class GroupsController < ApplicationController
   before_action :authenticate_user!
   # すでにグループに所属していたらグループの作成・参加は不可
   before_action :redirect_if_already_grouped, only: [ :new, :create, :join, :join_by_token ]
-  # グループ未所属は脱退不可
-  before_action :redirect_if_still_grouped, only: [ :leave ]
+  # グループ未所属は脱退・グループ編集は不可
+  before_action :redirect_if_still_grouped, only: [ :leave, :edit, :update ]
   before_action :set_current_group, only: [ :edit, :update ]
   # 新しいグループを作成
   def new
@@ -78,7 +78,7 @@ class GroupsController < ApplicationController
     redirect_to dashboard_path, alert: "すでにグループに所属しています。"
   end
 
-  # 未所属が脱退しようとしたらリダイレクト
+  # 未所属が脱退・グループ編集しようとしたらリダイレクト
   def redirect_if_still_grouped
     return if grouped_user?
     redirect_to dashboard_path, alert: "まだグループに所属していません。"
