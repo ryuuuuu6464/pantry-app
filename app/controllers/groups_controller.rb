@@ -13,7 +13,10 @@ class GroupsController < ApplicationController
   # グループ作成で入力された情報を保存
   def create
     @group = Group.new(params.require(:group).permit(:name))
+    # グループの作成者がゲストor一般ユーザーをセット
+    @group.is_guest = current_user.is_guest
     if @group.save
+      # 作成者のgroup_idを更新
       current_user.update!(group: @group)
       redirect_to dashboard_path, notice: "グループを作成しました。"
     else
@@ -29,15 +32,15 @@ class GroupsController < ApplicationController
     invite_token = params[:invite_token].to_s
     # invite_tokenが一致するグループを探す
     group = Group.find_by(invite_token: invite_token)
-    # invite_tokenが一致するグループが見つかった時の処理
-    if group.present?
+    # invite_tokenが一致する。かつ、is_guestが一致する時の処理
+    if group.present? && same_user_type?(group)
       # current_userの所属グループを更新し、ダッシュボードに移動
       current_user.update!(group: group)
       redirect_to dashboard_path, notice: "グループに参加しました。"
-    # invite_tokenが一致するグループが見つからなかった時の処理
+    # invite_tokenが一致しないか、is_guestが一致しない時の処理
     else
       # フラッシュメッセージを表示して参加画面を表示
-      flash[:alert] = "招待トークンが正しくありません。"
+      flash[:alert] = "招待トークンが間違っているか、参加できないグループです。"
       render :join, status: :unprocessable_entity
     end
   end
@@ -67,5 +70,10 @@ class GroupsController < ApplicationController
   def redirect_if_still_grouped
     return if grouped_user?
     redirect_to dashboard_path, alert: "まだグループに所属していません。"
+  end
+
+  # current_userとgroupのis_guestが同じか
+  def same_user_type?(group)
+    group.is_guest == current_user.is_guest
   end
 end
