@@ -1,1 +1,9 @@
 <h1>ダッシュボード</h1>
+
+<% if current_user.group.present? %>
+  <p>所属グループ名: <%= current_user.group.name %></p>
+<% else %>
+  <p>まだグループに所属していません。</p>
+<% end %>
+
+<%= link_to "グループ作成", new_group_path %>

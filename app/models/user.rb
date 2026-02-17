@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  belongs_to :group, optional: true
+  
   def self.guest
     find_or_create_by(email: "guest@example.com") do |user|
       user.name = "guestuser"

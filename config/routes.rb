@@ -1,8 +1,8 @@
 Rails.application.routes.draw do
-  get "home/index"
   root "homes#index"
 
   resource :dashboard, only: [ :show ]
+  resource :group, only: [ :new, :create ]
 
   devise_for :users, controllers: {
     registrations: "users/registrations",
