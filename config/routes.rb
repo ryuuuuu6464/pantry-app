@@ -2,7 +2,10 @@ Rails.application.routes.draw do
   root "homes#index"
 
   resource :dashboard, only: [ :show ]
-  resource :group, only: [ :new, :create ]
+  resource :group, only: [ :new, :create ] do
+    get :join
+    patch :join, action: :join_by_token
+  end
 
   devise_for :users, controllers: {
     registrations: "users/registrations",
