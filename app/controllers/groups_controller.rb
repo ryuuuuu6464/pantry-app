@@ -5,6 +5,7 @@ class GroupsController < ApplicationController
   before_action :redirect_if_already_grouped, only: [ :new, :create, :join, :join_by_token ]
   # グループ未所属は脱退不可
   before_action :redirect_if_still_grouped, only: [ :leave ]
+  before_action :set_current_group, only: [ :edit, :update ]
   # 新しいグループを作成
   def new
     @group = Group.new
@@ -45,6 +46,17 @@ class GroupsController < ApplicationController
     end
   end
 
+  def edit
+  end
+
+  def update
+    if @group.update(params.require(:group).permit(:name))
+      redirect_to dashboard_path, notice: "グループ名を更新しました。"
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   def leave
     # current_userのgroup_idをnilにしてグループ退会
     current_user.update!(group: nil)
@@ -75,5 +87,9 @@ class GroupsController < ApplicationController
   # current_userとgroupのis_guestが同じか
   def same_user_type?(group)
     group.is_guest == current_user.is_guest
+  end
+
+  def set_current_group
+    @group = current_user.group
   end
 end

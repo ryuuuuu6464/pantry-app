@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root "homes#index"
 
   resource :dashboard, only: [ :show ]
-  resource :group, only: [ :new, :create ] do
+  resource :group, only: [ :new, :create, :edit, :update ] do
     get :join
     patch :join, action: :join_by_token
     delete :leave

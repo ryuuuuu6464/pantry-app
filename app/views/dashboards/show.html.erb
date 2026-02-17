@@ -2,6 +2,7 @@
 
 <% if current_user.group.present? %>
   <p>所属グループ名: <%= current_user.group.name %></p>
+  <%= link_to "グループ名を編集", edit_group_path %>
   <p>招待トークン: <%= current_user.group.invite_token %></p>
   <h3>所属ユーザー</h3>
   <ul>
