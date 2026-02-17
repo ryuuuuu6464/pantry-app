@@ -3,8 +3,9 @@
 <% if current_user.group.present? %>
   <p>所属グループ名: <%= current_user.group.name %></p>
 <% else %>
-  <p>まだグループに所属していません。</p>
+  <p>グループの作成か参加をしてください。</p>
 <% end %>
 
 <%= link_to "グループを作成", new_group_path %>
 <%= link_to "グループに参加", join_group_path %>
+<%= link_to "グループを退会", leave_group_path, data: { turbo_method: :delete } %>

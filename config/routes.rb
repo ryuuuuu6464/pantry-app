@@ -5,6 +5,7 @@ Rails.application.routes.draw do
   resource :group, only: [ :new, :create ] do
     get :join
     patch :join, action: :join_by_token
+    delete :leave
   end
 
   devise_for :users, controllers: {

@@ -1,8 +1,10 @@
 class GroupsController < ApplicationController
-  # ログイン済みか？
+  # 未ログインは全アクション不可
   before_action :authenticate_user!
-  # すでにグループに所属していないか？
+  # すでにグループに所属していたらグループの作成・参加は不可
   before_action :redirect_if_already_grouped, only: [ :new, :create, :join, :join_by_token ]
+  # グループ未所属は脱退不可
+  before_action :redirect_if_still_grouped, only: [ :leave ]
   # 新しいグループを作成
   def new
     @group = Group.new
@@ -40,13 +42,30 @@ class GroupsController < ApplicationController
     end
   end
 
+  def leave
+    # current_userのgroup_idをnilにしてグループ退会
+    current_user.update!(group: nil)
+    redirect_to dashboard_path, notice: "グループを退会しました。"
+  end
+
   private
 
-  # 1ユーザー1グループの制約
+  # グループ所属判定メソッド
+  def grouped_user?
+    current_user.group_id.present?
+  end
+
+  # 所属済みが作成・参加しようとしたらリダイレクト
   def redirect_if_already_grouped
     # current_userにgroup_idがなければ処理から抜ける
-    return unless current_user.group_id.present?
+    return unless grouped_user?
     # すでにgroup_idがあればダッシュボードに返す
     redirect_to dashboard_path, alert: "すでにグループに所属しています。"
+  end
+
+  # 未所属が脱退しようとしたらリダイレクト
+  def redirect_if_still_grouped
+    return if grouped_user?
+    redirect_to dashboard_path, alert: "まだグループに所属していません。"
   end
 end
