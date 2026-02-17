@@ -4,8 +4,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  # 1ユーザーは1グループに所属（未所属でも可）
   belongs_to :group, optional: true
-  
+  # ゲストユーザー
   def self.guest
     find_or_create_by(email: "guest@example.com") do |user|
       user.name = "guestuser"
