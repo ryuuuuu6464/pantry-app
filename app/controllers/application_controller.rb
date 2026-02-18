@@ -14,6 +14,11 @@ class ApplicationController < ActionController::Base
     dashboard_path
   end
 
+  # Deviseログアウト後の遷移先を指定
+  def after_sign_out_path_for(resource)
+    root_path
+  end
+
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   protected
