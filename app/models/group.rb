@@ -1,10 +1,15 @@
 class Group < ApplicationRecord
   # 1つのグループに複数のユーザー所属
   has_many :users
-
+  # Groupモデルのバリデーション
+  # グループ作成時に招待トークンを生成
   before_validation :set_invite_token, on: :create
-  # invite_tokenが作成されているか確認
+  # invite_token必須 & 固有
   validates :invite_token, presence: true, uniqueness: true
+  # グループ名必須 & 1文字以上12文字以下
+  validates :name, presence: true, length: { in: 1..12 }
+  # is_guestがnilでない
+  validates :is_guest, inclusion: { in: [ true, false ] }
 
   private
 
@@ -13,7 +18,9 @@ class Group < ApplicationRecord
     return if invite_token.present?
     # 重複避けるまでinvite_tokenを再生成
     loop do
+      # 24文字のランダムな文字列をセット
       self.invite_token = SecureRandom.alphanumeric(24)
+      # セットした招待トークンが既に存在しなければループから抜ける
       break unless Group.exists?(invite_token: invite_token)
     end
   end

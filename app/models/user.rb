@@ -7,7 +7,7 @@ class User < ApplicationRecord
   # 1ユーザーは1グループに所属（未所属でも可）
   belongs_to :group, optional: true
   # Userモデルのバリデーション
-  # name必須
+  # name必須 & 1文字以上10文字以下
   validates :name, presence: true, length: { in: 1..10 }
   # ゲストユーザー
   def self.guest

@@ -2,21 +2,21 @@ require "rails_helper"
 
 RSpec.describe User, type: :model do
   describe "ユーザーのバリデーションに関するテスト" do
-    it "名前が無い場合は無効" do
+    it "名前が無い場合は無効であること" do
       # 名前が空欄のユーザーを作成
       user_without_name = FactoryBot.build(:user, name: "")
       # 作成したユーザーが無効か確認
       expect(user_without_name).to be_invalid
     end
 
-    it "名前が10文字以内の場合は有効" do
+    it "名前が10文字以内の場合は有効であること" do
       # 名前が10文字のユーザーを作成
       user_less_than_name = FactoryBot.build(:user, name: "a" * 10)
       # 作成したユーザーが有効か確認
       expect(user_less_than_name).to be_valid
     end
 
-    it "名前が11文字以上の場合は無効" do
+    it "名前が11文字以上の場合は無効であること" do
       # 名前が11文字のユーザーを作成
       user_more_than_name = FactoryBot.build(:user, name: "a" * 11)
       # 作成したユーザーが無効か確認
