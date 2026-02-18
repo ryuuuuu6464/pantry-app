@@ -42,4 +42,28 @@ RSpec.describe "UsersController", type: :request do
       expect(guest.is_guest).to be(true)
     end
   end
+
+  describe "ログアウト" do
+    # ログアウトするユーザーを定義
+    let(:logout_user) { create(:user, email: "logout@example.com") }
+    it "ログアウトできること" do
+      # ログインする
+      post user_session_path, params: { user: { email: logout_user.email, password: logout_user.password } }
+      # ログアウトする
+      delete destroy_user_session_path
+      # トップページに遷移するか確認
+      expect(response).to redirect_to(root_path)
+    end
+
+    it "ログアウト後はダッシュボードにアクセスできないこと" do
+      # ログインする
+      post user_session_path, params: { user: { email: logout_user.email, password: logout_user.password } }
+      # ログアウトする
+      delete destroy_user_session_path
+      # ログアウト後にダッシュボードへ遷移できないことを確認
+      get dashboard_path
+      # ログイン後にダッシュボードへアクセスしたらログインに遷移するか確認
+      expect(response).to redirect_to(new_user_session_path)
+    end
+  end
 end
