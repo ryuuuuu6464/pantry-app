@@ -54,7 +54,7 @@ RSpec.describe "UsersController", type: :request do
       # トップページに遷移するか確認
       expect(response).to redirect_to(root_path)
     end
-    
+
     it "ログアウト後はダッシュボードにアクセスできないこと" do
       # ログインする
       post user_session_path, params: { user: { email: logout_user.email, password: logout_user.password } }
