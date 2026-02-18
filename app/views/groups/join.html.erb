@@ -1,0 +1,6 @@
+<h1>グループ参加</h1>
+<%= form_with url: join_group_path, method: :patch do |f| %>
+  <div><%= f.label :invite_token, "招待トークン" %></div>
+  <div><%= f.text_field :invite_token %></div>
+  <div><%= f.submit "参加する" %></div>
+<% end %>
