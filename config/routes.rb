@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     delete :leave
   end
   resources :categories
+  resources :items
 
   devise_for :users, controllers: {
     registrations: "users/registrations",
