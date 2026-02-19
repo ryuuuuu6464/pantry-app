@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     patch :join, action: :join_by_token
     delete :leave
   end
+  resources :categories
 
   devise_for :users, controllers: {
     registrations: "users/registrations",

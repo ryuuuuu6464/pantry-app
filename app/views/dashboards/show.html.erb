@@ -16,7 +16,8 @@
   <p>グループの作成か参加をしてください。</p>
 <% end %>
 
-<%= link_to "グループを作成", new_group_path %>
-<%= link_to "グループに参加", join_group_path %>
-<%= link_to "グループを退会", leave_group_path, data: { turbo_method: :delete } %>
-<%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete } %>
+    <%= link_to "グループを作成", new_group_path %>
+    <%= link_to "グループに参加", join_group_path %>
+    <%= link_to "グループを退会", leave_group_path, data: { turbo_method: :delete } %>
+    <%= link_to "ログアウト", destroy_user_session_path, data: { turbo_method: :delete } %>
+    <%= link_to "カテゴリー一覧", categories_path %>

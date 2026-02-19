@@ -9,7 +9,7 @@ RSpec.describe Group, type: :model do
       expect(group_without_name).to be_invalid
     end
 
-    it "グループ名が12文字以内の場合は有効であること" do
+    it "グループ名が12文字以下の場合は有効であること" do
       # グループ名が12文字のグループを作成
       group_less_than_name = FactoryBot.build(:group, name: "a" * 12)
       # 作成したグループが有効か確認

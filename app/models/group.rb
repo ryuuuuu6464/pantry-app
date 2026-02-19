@@ -1,6 +1,8 @@
 class Group < ApplicationRecord
-  # 1つのグループに複数のユーザー所属
+  # 1つのグループは複数のユーザーを持つ
   has_many :users
+  # 1つのグループは複数のカテゴリーを持つ
+  has_many :categories
   # Groupモデルのバリデーション
   # グループ作成時に招待トークンを生成
   before_validation :set_invite_token, on: :create
