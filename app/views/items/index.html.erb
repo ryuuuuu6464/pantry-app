@@ -1,0 +1,17 @@
+<h2>アイテム一覧</h2>
+<p><%= link_to "アイテムを作成", new_item_path %></p>
+<% if @items.empty? %>
+  <p>アイテムがありません。</p>
+<% else %>
+  <ul>
+    <% @items.each do |item| %>
+      <li>
+        <%= item.name %>
+        （カテゴリー: <%= item.category.name %>）
+        <%= link_to "詳細", item_path(item) %>
+        <%= link_to "編集", edit_item_path(item) %>
+        <%= link_to "削除", item_path(item), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

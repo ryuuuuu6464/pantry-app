@@ -3,6 +3,8 @@ class Group < ApplicationRecord
   has_many :users
   # 1つのグループは複数のカテゴリーを持つ
   has_many :categories
+  # 1つのグループは複数のアイテムを持つ
+  has_many :items
   # Groupモデルのバリデーション
   # グループ作成時に招待トークンを生成
   before_validation :set_invite_token, on: :create
