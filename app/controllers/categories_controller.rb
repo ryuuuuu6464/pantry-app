@@ -19,7 +19,7 @@ class CategoriesController < ApplicationController
     # 新しいインスタンスを用意
     @category = Category.new
   end
-  
+
   # カテゴリー新規作成の処理
   def create
     # カテゴリーをcurrent_userのグループに紐づけて作成
