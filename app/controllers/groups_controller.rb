@@ -5,6 +5,7 @@ class GroupsController < ApplicationController
   before_action :redirect_if_already_grouped, only: [ :new, :create, :join, :join_by_token ]
   # グループ未所属は脱退・グループ編集は不可
   before_action :redirect_if_still_grouped, only: [ :leave, :edit, :update ]
+  # グループの編集前にユーザーのグループをセット
   before_action :set_current_group, only: [ :edit, :update ]
   # 新しいグループを作成
   def new
