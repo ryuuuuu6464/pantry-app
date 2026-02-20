@@ -11,8 +11,8 @@ RSpec.describe "ItemsController", type: :request do
   let(:item) { create(:item, group: group, category: category) }
 
   # ユーザーをログインさせるメソッド
-  def login_as(target_user)
-    post user_session_path, params: { user: { email: target_user.email, password: target_user.password } }
+  def login_as(user)
+    post user_session_path, params: { user: { email: user.email, password: user.password } }
   end
 
   describe "GET /items" do
