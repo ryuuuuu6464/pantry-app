@@ -1,7 +1,0 @@
-<h2>カテゴリー名編集</h2>
-<%= form_with model: @category do |f| %>
-  <div><%= f.label :name, "カテゴリー名" %></div>
-  <div><%= f.text_field :name %></div>
-  <div><%= f.submit "保存" %></div>
-<% end %>
-<p><%= link_to "戻る", categories_path %></p>

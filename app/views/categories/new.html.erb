@@ -1,8 +1,0 @@
-<h2>カテゴリ作成</h2>
-<%= form_with model: @category do |f| %>
-  <div><%= f.label :name, "カテゴリー名" %></div>
-  <div><%= f.text_field :name %></div>
-  <div><%= f.submit "作成する" %></div>
-<% end %>
-<p><%= link_to "戻る", categories_path %></p>
-
