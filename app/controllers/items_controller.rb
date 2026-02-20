@@ -12,8 +12,9 @@ class ItemsController < ApplicationController
 
   # アイテム一覧を表示
   def index
-    # 自分のグループのアイテムを取得
+    # 自分のグループのアイテムをすべて取得
     @items = current_user.group.items.all
+    @inventories = current_user.group.inventories.index_by(&:item_id)
   end
 
   # アイテム新規作成画面を表示

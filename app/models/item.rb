@@ -9,11 +9,19 @@ class Item < ApplicationRecord
   validates :name, presence: true, length: { in: 1..12 }, uniqueness: { scope: :group_id }
   # アイテムが紐づくグループとカテゴリーが紐づくグループが同じかチェックする
   validate :category_belong_same_group
+  # アイテム作成時に在庫も作成する
+  after_create :create_inventory
 
   private
 
   def category_belong_same_group
     return if category.group_id == group_id
     errors.add(:category_id, "は同じグループのカテゴリーを選択してください。")
+  end
+
+  def create_inventory
+    Inventory.find_or_create_by(group_id: group_id, item_id: id) do |inventory|
+      inventory.quantity = 0
+    end
   end
 end
