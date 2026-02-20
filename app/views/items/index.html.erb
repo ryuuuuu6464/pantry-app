@@ -1,0 +1,24 @@
+<h2>アイテム一覧</h2>
+<p><%= link_to "アイテムを作成", new_item_path %></p>
+<% if @items.empty? %>
+  <p>アイテムがありません。</p>
+<% else %>
+  <ul>
+    <% @items.each do |item| %>
+      <% inventory = @inventories[item.id] %>
+      <li>
+        <%= item.name %>
+        （カテゴリー: <%= item.category.name %>）
+        （在庫数: <%= inventory.quantity %>）
+        <%= link_to "詳細", item_path(item) %>
+        <%= link_to "編集", edit_item_path(item) %>
+        <%= link_to "削除", item_path(item), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } %>
+        <%= form_with model: inventory, url: inventory_path(inventory), method: :patch, local: true do |f| %>
+          <%= f.label :quantity, "在庫数" %>
+          <%= f.number_field :quantity, min: 0 %>
+          <%= f.submit "更新する" %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

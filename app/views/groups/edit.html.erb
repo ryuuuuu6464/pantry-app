@@ -1,0 +1,6 @@
+<h1>グループ編集</h1>
+<%= form_with model: @group, url: group_path do |f| %>
+  <div><%= f.label :name, "グループ名" %></div>
+  <div><%= f.text_field :name %></div>
+  <div><%= f.submit "保存" %></div>
+<% end %>
