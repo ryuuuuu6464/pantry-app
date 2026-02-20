@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   end
   resources :categories
   resources :items
+  resources :inventories, only: [ :update ]
 
   devise_for :users, controllers: {
     registrations: "users/registrations",
