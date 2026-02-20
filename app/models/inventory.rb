@@ -8,7 +8,7 @@ class Inventory < ApplicationRecord
   # 同じグループ内でアイテムのinventoryは1つだけ
   validates :item_id, uniqueness: { scope: :group_id }
   # アイテムが紐づくグループとinventoryが紐づくグループが同じかチェックする
-  validates :item_belong_same_group
+  validate :item_belong_same_group
 
   private
 

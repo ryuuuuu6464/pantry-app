@@ -3,6 +3,8 @@ class Item < ApplicationRecord
   belongs_to :group
   # アイテムは1つのカテゴリーに紐づく
   belongs_to :category
+  # アイテムは複数のinventoryを持つ
+  has_many :inventories
   # アイテム名必須 & 1文字以上12文字以下 & 同グループ内で固有
   validates :name, presence: true, length: { in: 1..12 }, uniqueness: { scope: :group_id }
   # アイテムが紐づくグループとカテゴリーが紐づくグループが同じかチェックする
