@@ -8,9 +8,8 @@ RSpec.describe "CategoriesController", type: :request do
   # カテゴリーを1つ作成
   let(:category) { create(:category, group: group) }
 
-  # リクエストスペック内で使うログインヘルパー
+  # ユーザーをログインさせるメソッド
   def login_as(target_user)
-    # DeviseのログインエンドポイントにPOSTしてセッションを作る
     post user_session_path, params: { user: { email: target_user.email, password: target_user.password } }
   end
 
@@ -50,6 +49,15 @@ RSpec.describe "CategoriesController", type: :request do
       login_as(user)
     end
 
+    describe "GET /categories/new" do
+      it "正常にカテゴリー新規作成画面にアクセスできること" do
+        # カテゴリー新規作成画面へアクセスする
+        get new_category_path
+        # HTTPステータス200が返るか確認
+        expect(response).to have_http_status(200)
+      end
+    end
+
     describe "POST /categories" do
       it "カテゴリーを作成できること" do
         # カテゴリー名が「食料品」のカテゴリーを作成
@@ -68,7 +76,7 @@ RSpec.describe "CategoriesController", type: :request do
 
     describe "PATCH /categories/:id" do
       it "カテゴリー名を更新できること" do
-        # PATCHでnameが変わることを確認する
+        # PATCHでカテゴリー名が更新カテゴリーに変わることを確認
         patch category_path(category), params: { category: { name: "更新カテゴリー" } }
         expect(category.reload.name).to eq("更新カテゴリー")
       end
@@ -87,9 +95,9 @@ RSpec.describe "CategoriesController", type: :request do
   end
 
   describe "他グループカテゴリへのアクセス制限" do
-    # 別グループを作成する
+    # 別グループを作成
     let(:other_group) { create(:group) }
-    # 別グループのカテゴリを作成する
+    # 別グループのカテゴリを作成
     let(:other_group_category) { create(:category, group: other_group) }
     # ログイン済みグループ所属済みユーザーを定義
     before do

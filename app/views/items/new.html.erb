@@ -1,0 +1,11 @@
+<h2>アイテム作成</h2>
+<%= form_with model: @item do |f| %>
+  <div><%= f.label :name, "アイテム名" %></div>
+  <div><%= f.text_field :name %></div>
+  <div><%= f.label :category_id, "カテゴリー" %></div>
+  <div>
+    <%= f.collection_select :category_id, @categories, :id, :name, prompt: "選択してください。" %>
+  </div>
+  <div><%= f.submit "作成する" %></div>
+<% end %>
+<p><%= link_to "戻る", items_path %></p>

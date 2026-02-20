@@ -55,7 +55,7 @@ class CategoriesController < ApplicationController
       # カテゴリー一覧にリダイレクト
       redirect_to categories_path, notice: "カテゴリーを更新しました。"
     else
-      # 失敗したら更新画面を再表示
+      # 失敗したら編集画面を再表示
       render :edit, status: :unprocessable_entity
     end
   end
