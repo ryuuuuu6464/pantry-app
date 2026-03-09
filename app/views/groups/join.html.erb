@@ -1,6 +1,10 @@
-<h1>グループ参加</h1>
-<%= form_with url: join_group_path, method: :patch do |f| %>
-  <div><%= f.label :invite_token, "招待トークン" %></div>
-  <div><%= f.text_field :invite_token %></div>
-  <div><%= f.submit "参加する" %></div>
-<% end %>
+<section class="section">
+  <h2 class="section-title">グループ参加</h2>
+  <%= form_with url: join_group_path, html: { class: "input-form" }, method: :patch do |f| %>
+    <div><%= f.label :invite_token, "招待トークン" %></div>
+    <div><%= f.text_field :invite_token %></div>
+    <div class="actions">
+      <%= f.submit "参加する", class: "submit-btn" %>
+    </div>
+  <% end %>
+</section>

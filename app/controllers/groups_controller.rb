@@ -26,6 +26,9 @@ class GroupsController < ApplicationController
     end
   end
 
+  def navigation
+  end
+
   def join
   end
 
@@ -82,7 +85,7 @@ class GroupsController < ApplicationController
   # 未所属が脱退・グループ編集しようとしたらリダイレクト
   def redirect_if_still_grouped
     return if grouped_user?
-    redirect_to dashboard_path, alert: "まだグループに所属していません。"
+    redirect_to navigation_group_path, alert: "まだグループに所属していません。"
   end
 
   # current_userとgroupのis_guestが同じか

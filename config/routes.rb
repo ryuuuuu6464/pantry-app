@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   resource :dashboard, only: [ :show ]
   resource :group, only: [ :new, :create, :edit, :update ] do
+    get :navigation
     get :join
     patch :join, action: :join_by_token
     delete :leave
