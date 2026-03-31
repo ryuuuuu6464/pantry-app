@@ -8,17 +8,19 @@
         <% @items.each do |item| %>
           <% inventory = @inventories[item.id] %>
           <li class="item-list-item">
-            <span class="item-name"><%= item.name %></span>
-            （カテゴリー: <%= item.category.name %>）
+            <div class="item-main">
+              <span class="item-name"><%= item.name %></span>
+              <span class="item-category">（カテゴリー: <%= item.category.name %>）
+            </div>
             
             <div class="item-stock-controls">
-            <% if inventory.present? %>
-            <%= button_to "-", inventory_path(inventory), method: :patch, params: { inventory: { quantity: [inventory.quantity - 1, 0].max } }, class: "stock-btn stock-btn-minus" %>
-            <span class="item-stock-value"><%= inventory.quantity %></span>
-            <%= button_to "+", inventory_path(inventory), method: :patch, params: { inventory: { quantity: inventory.quantity + 1 } }, class: "stock-btn" %>
-            <% else %>
-            <span class="item-sotck-value">0</span>
-            <% end %>
+              <% if inventory.present? %>
+                <%= button_to "-", inventory_path(inventory), method: :patch, params: { inventory: { quantity: [inventory.quantity - 1, 0].max } }, class: "stock-btn stock-btn-minus" %>
+                <span class="item-stock-value"><%= inventory.quantity %></span>
+                <%= button_to "+", inventory_path(inventory), method: :patch, params: { inventory: { quantity: inventory.quantity + 1 } }, class: "stock-btn" %>
+              <% else %>
+                <span class="item-stock-value">0</span>
+              <% end %>
             </div>
 
             <div class="item-list-actions">
