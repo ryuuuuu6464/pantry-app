@@ -1,0 +1,35 @@
+<header class="header">
+  <div class="header-container">
+    <input type="checkbox" id="menu-toggle" class="menu-toggle">
+
+    <label for="menu-toggle" class="menu-btn">
+      <span></span>
+      <span></span>
+      <span></span>
+    </label>
+
+    <h1 class="app-title">
+      <%= link_to "Pantry", dashboard_path %>
+    </h1>
+
+    <nav class="header-nav">
+      <ul class="header-nav-list">
+        <li><%= link_to "ダッシュボード", dashboard_path %></li>
+        <li><%= link_to "カテゴリ一", categories_path %></li>
+        <li><%= link_to "アイテム", items_path %></li>
+        <li><%= link_to "グループ", navigation_group_path %></li>
+      </ul>
+      <label for="menu-toggle" class="menu-close-btn">
+        <%= image_tag "arrow-up.svg", alt: "閉じるアイコン", class: "menu-close-icon" %>
+      </label>
+    </nav>
+
+    <div class="header-actions">
+      <%= link_to "ログアウト", destroy_user_session_path, class: "logout-text", data: { turbo_method: :delete } %>
+
+      <%= link_to destroy_user_session_path, class: "logout-icon", data: { turbo_method: :delete } do %>
+        <%= image_tag "logout-icon.svg", alt: "ログアウトアイコン", class: "logout-icon-img" %>
+      <% end %>
+    </div>
+  </div>
+</header>

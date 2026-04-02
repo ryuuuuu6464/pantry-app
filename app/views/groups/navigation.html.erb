@@ -1,0 +1,8 @@
+<section class="section">
+  <h2 class="section-title">グループ</h2>
+  <div class="group-actions">
+    <%= link_to "グループを作成", new_group_path, class: "link-btn" %>
+    <%= link_to "グループに参加", join_group_path, class: "link-btn" %>
+    <%= link_to "グループを退会", leave_group_path, class: "link-btn", data: { turbo_method: :delete } %>
+  </div>
+</section>
