@@ -1,5 +1,6 @@
 <section class="section">
   <h2 class="section-title">グループ編集</h2>
+
   <%= form_with model: @group, url: group_path, html: { class: "input-form" } do |f| %>
     <div><%= f.label :name, "グループ名" %></div>
     <div><%= f.text_field :name %></div>
@@ -7,4 +8,6 @@
       <%= f.submit "保存", class: "submit-btn" %>
     </div>
   <% end %>
+
+  <p><%= link_to "戻る", dashboard_path %></p>
 </section>

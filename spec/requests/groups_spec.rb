@@ -47,7 +47,7 @@ RSpec.describe "GroupsController", type: :request do
         # グループ作成画面にアクセス
         get new_group_path
         # ダッシュボードへリダイレクトされることを確認
-        expect(response).to redirect_to(dashboard_path)
+        expect(response).to redirect_to(navigation_group_path)
       end
     end
   end

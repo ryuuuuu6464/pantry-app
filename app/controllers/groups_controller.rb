@@ -79,7 +79,7 @@ class GroupsController < ApplicationController
     # current_userにgroup_idがなければ処理から抜ける
     return unless grouped_user?
     # すでにgroup_idがあればダッシュボードに返す
-    redirect_to dashboard_path, alert: "すでにグループに所属しています。"
+    redirect_to navigation_group_path, alert: "すでにグループに所属しています。"
   end
 
   # 未所属が脱退・グループ編集しようとしたらリダイレクト
