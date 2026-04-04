@@ -117,4 +117,38 @@ RSpec.describe "ItemsController", type: :request do
       expect(response).to redirect_to(items_path)
     end
   end
+
+  describe "アイテム一覧のカテゴリ絞り込みのテスト" do
+    # 同じグループ内に「食料品」と「日用品」のカテゴリを作成
+    let(:food) { create(:category, group: group, name: "食料品") }
+    let(:daily) { create(:category, group: group, name: "日用品") }
+    # 各カテゴリに紐づくアイテムを作成
+    let!(:milk) { create(:item, group: group, category: food, name: "牛乳") }
+    let!(:soap) { create(:item, group: group, category: daily, name: "洗剤") }
+
+    before do
+      user.update!(group: group)
+      login_as(user)
+    end
+
+    context "category_idを指定した時" do
+      # 食料品カテゴリで絞り込み
+      before { get items_path, params: { category_id: food.id } }
+
+      it "ステータス200を返すこと" do
+        # アイテム一覧ページが正常に表示されることを確認
+        expect(response).to have_http_status(200)
+      end
+
+      it "対象カテゴリのアイテム名を含むこと" do
+        # 絞り込みしたカテゴリのアイテムが表示されることを確認
+        expect(response.body).to include("牛乳")
+      end
+
+      it "他カテゴリのアイテム名を含まないこと" do
+        # 対象外カテゴリのアイテムが表示されないことを確認
+        expect(response.body).not_to include("洗剤")
+      end
+    end
+  end
 end
