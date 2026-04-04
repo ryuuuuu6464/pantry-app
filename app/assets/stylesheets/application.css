@@ -646,6 +646,40 @@ p {
 }
 
 /* アイテム一覧 */
+.item-filter {
+  margin: 8px 0 14px;
+}
+
+.item-filter-form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.item-filter-label {
+  font-weight: 700;
+}
+
+.item-filter-select {
+  height: 32px;
+  border: 1px solid #949495;
+  border-radius: 8px;
+  padding: 0 10px;
+  background: #fff;
+}
+
+.item-filter-submit {
+  height: 32px;
+  border: 1px solid #333;
+  border-radius: 8px;
+  background: #333;
+  color: #fff;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
 .item-list-card {
   display: flex;
   justify-content: space-between;

@@ -12,8 +12,15 @@ class ItemsController < ApplicationController
 
   # アイテム一覧を表示
   def index
-    # 自分のグループのアイテムをすべて取得
-    @items = current_user.group.items.all
+    # 絞り込み用にカテゴリーを取得
+    @categories = current_user.group.categories.order(:id)
+    # 自分のグループのアイテムを取得(カテゴリをincludesで先読みしてN+1を防ぐ)
+    @items = current_user.group.items.includes(:category)
+    # category_idが送られてきたら絞り込み
+    if params[:category_id].present?
+      @items = @items.where(category_id: params[:category_id])
+    end
+    # ログイン中ユーザーのグループの在庫一覧を取得し、item_idを在庫レコードの形のhashに変換する(viewで@inventories[item.id]として参照しやすくするため)
     @inventories = current_user.group.inventories.index_by(&:item_id)
   end
 
