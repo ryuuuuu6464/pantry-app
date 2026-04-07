@@ -1,6 +1,6 @@
 require "rails_helper"
 
-RSpec.describe "グループ機能", type: :system do
+RSpec.describe "グループ機能に関するテスト", type: :system do
   # すべてのテストで使うログインユーザー
   let(:user) { create(:user, password: "password", password_confirmation: "password") }
 
@@ -12,7 +12,7 @@ RSpec.describe "グループ機能", type: :system do
     click_button "ログインする"
   end
 
-  context "グループ未所属ユーザー" do
+  context "グループ未所属ユーザーの場合" do
     # 参加先グループを事前作成
     let!(:target_group) { create(:group, name: "テストグループ", is_guest: false) }
 
@@ -49,7 +49,7 @@ RSpec.describe "グループ機能", type: :system do
     end
   end
 
-  context "グループ所属ユーザー" do
+  context "グループ所属ユーザーの場合" do
     # グループの作成
     let!(:group) { create(:group, name: "編集前グループ", is_guest: false) }
 
