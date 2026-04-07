@@ -28,7 +28,7 @@ RSpec.describe "グループ機能に関するテスト", type: :system do
       click_button "作成"
 
       # ダッシュボードに戻り、所属グループ名が表示されることを確認
-      expect(current_path).to eq dashboard_path
+      expect(current_path).to eq(dashboard_path)
       expect(page).to have_content("所属グループ名: テストグループ")
     end
 
@@ -44,7 +44,7 @@ RSpec.describe "グループ機能に関するテスト", type: :system do
       click_button "参加する"
 
       # ダッシュボードで参加できたことを確認
-      expect(current_path).to eq dashboard_path
+      expect(current_path).to eq(dashboard_path)
       expect(page).to have_content("所属グループ名: テストグループ")
     end
   end
@@ -68,7 +68,7 @@ RSpec.describe "グループ機能に関するテスト", type: :system do
       click_button "保存"
 
       # グループ名を編集後にダッシュボードに遷移するか確認
-      expect(current_path).to eq dashboard_path
+      expect(current_path).to eq(dashboard_path)
       # グループ名が「編集後グループ」に名前が変更されている確認
       expect(page).to have_content("所属グループ名: 編集後グループ")
     end

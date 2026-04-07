@@ -19,7 +19,7 @@ RSpec.describe "認証機能に関するシステムスペック", type: :system
       click_button "アカウント登録"
 
       # 新規登録後にダッシュボードに遷移するか確認
-      expect(current_path).to eq dashboard_path
+      expect(current_path).to eq(dashboard_path)
       # 入力したメールアドレスのユーザーが存在するか確認
       expect(User.exists?(email: "yamada_taro@example.com")).to be(true)
     end
@@ -36,7 +36,7 @@ RSpec.describe "認証機能に関するシステムスペック", type: :system
       click_button "ログインする"
 
       # ログイン後にダッシュボードに遷移するか確認
-      expect(current_path).to eq dashboard_path
+      expect(current_path).to eq(dashboard_path)
     end
 
     # 以下ログアウトのテストはSelenium環境を設定してからコメントアウトを外す。
@@ -51,7 +51,7 @@ RSpec.describe "認証機能に関するシステムスペック", type: :system
     #   # ログアウトリンクを押す
     #   click_link "ログアウト"
     #   # ログアウト後にroot_pathに遷移するか確認
-    #   expect(current_path).to eq root_path
+    #   expect(current_path).to eq(root_path)
     # end
   end
 end

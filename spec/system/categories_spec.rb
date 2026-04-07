@@ -30,7 +30,7 @@ RSpec.describe "カテゴリ機能に関するテスト", type: :system do
     click_button "作成する"
 
     # カテゴリ一覧画面にリダイレクトされるか確認
-    expect(current_path).to eq categories_path
+    expect(current_path).to eq(categories_path)
     # 作成したカテゴリ名が表示されているか確認
     expect(page).to have_content("食料品")
   end
@@ -44,7 +44,7 @@ RSpec.describe "カテゴリ機能に関するテスト", type: :system do
     click_button "保存"
 
     # カテゴリ一覧にリダイレクトされるか確認
-    expect(current_path).to eq categories_path
+    expect(current_path).to eq(categories_path)
     # カテゴリ名が変更されて表示されているか確認
     expect(page).to have_content("編集後カテゴリ")
   end
