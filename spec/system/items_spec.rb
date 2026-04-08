@@ -88,4 +88,44 @@ RSpec.describe "アイテム機能に関するテスト", type: :system do
       expect(page).not_to have_content("ハンドソープ")
     end
   end
+
+  context "在庫数の表示と増減に関するテスト" do
+    # 在庫確認で使用するテストアイテムを作成
+    let!(:stock_item) { create(:item, group: group, category: food_category, name: "テストアイテム") }
+
+    before do
+      # アイテム数の増減をテストするために在庫数を3にしておく
+      stock_item.inventory.update!(quantity: 3)
+      # アイテム一覧画面にアクセス
+      visit items_path
+    end
+
+    it "現在の在庫数が画面に表示されること" do
+      # テストアイテムの行に絞って在庫数の表示を確認
+      within(".item-list-item", text: "テストアイテム") do
+        # テストアイテムの在庫数3が表示されているか確認
+        expect(page).to have_selector(".item-stock-value", text: "3")
+      end
+    end
+
+    it "アイテムの在庫数を増やせること" do
+      # テストアイテムの在庫を増やすボタンを押す
+      within(".item-list-item", text: "テストアイテム") do
+        click_button "+"
+      end
+
+      # テストアイテムの在庫数が3から4に増えていることを確認
+      expect(stock_item.inventory.reload.quantity).to eq(4)
+    end
+
+    it "アイテムの在庫数を減らせること" do
+      # テストアイテムの在庫を減らすボタンを押す
+      within(".item-list-item", text: "テストアイテム") do
+        click_button "-"
+      end
+
+      # テストアイテムの在庫数が3から2に減っていることを確認
+      expect(stock_item.inventory.reload.quantity).to eq(2)
+    end
+  end
 end
