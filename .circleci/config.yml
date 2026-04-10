@@ -82,8 +82,18 @@ jobs:
           command: |
             bundle exec rspec
 
+  deploy:
+    executor: ruby
+    steps:
+      - attach_workspace:
+          at: ~/project
+      - run:
+          name: Deploy to Heroku
+          command: |
+            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git HEAD:main
+
 workflows:
-  build_rubocop_rspec:
+  build_rubocop_rspec_deploy:
     jobs:
       - build
       - rubocop:
@@ -92,3 +102,11 @@ workflows:
       - rspec:
           requires:
             - rubocop
+      - deploy:
+          requires:
+            - rubocop
+            - rspec
+          filters:
+            branches:
+              only:
+                - main
