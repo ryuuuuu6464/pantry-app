@@ -1,5 +1,7 @@
+<% content_for :title, "アイテム編集" %>
+
 <section class="section">
-  <h2 class="section-title">アイテム名編集</h2>
+  <h2 class="section-title">アイテム編集</h2>
   <%= form_with model: @item, html: { class: "input-form" } do |f| %>
     <div><%= f.label :name, "アイテム名" %></div>
     <div><%= f.text_field :name %></div>

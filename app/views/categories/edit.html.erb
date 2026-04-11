@@ -1,8 +1,10 @@
+<% content_for :title, "カテゴリ編集" %>
+
 <section class="section">
-  <h2 class="section-title">カテゴリー名編集</h2>
+  <h2 class="section-title">カテゴリ編集</h2>
 
   <%= form_with model: @category, html: { class: "input-form" } do |f| %>
-    <div><%= f.label :name, "カテゴリー名" %></div>
+    <div><%= f.label :name, "カテゴリ名" %></div>
     <div><%= f.text_field :name %></div>
     <div class="actions"><%= f.submit "保存", class: "submit-btn" %></div>
   <% end %>
