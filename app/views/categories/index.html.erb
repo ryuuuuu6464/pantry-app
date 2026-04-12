@@ -1,0 +1,28 @@
+<% content_for :title, "カテゴリ" %>
+
+<section class="section">
+  <h2 class="section-title">カテゴリ一覧</h2>
+
+  <div class="category-list-card">
+    <% if @categories.empty? %>
+      <p>カテゴリがありません。</p>
+    <% else %>
+      <ul class="category-list">
+        <% @categories.each do |category| %>
+          <li class="category-list-item">
+            <span class="category-name"><%= category.name %></span>
+            <div class="category-list-actions">
+              <%= link_to edit_category_path(category), class: "list-edit-btn" do %>
+                <%= image_tag "edit-icon.svg", alt: "編集アイコン", class: "list-edit-icon" %>
+              <% end %>
+              <%= link_to category_path(category), class: "list-delete-btn", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } do %>
+                <%= image_tag "delete-icon.svg", alt: "削除アイコン", class: "list-delete-icon" %>
+              <% end %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+  <p><%= link_to "カテゴリを作成", new_category_path, class: "link-btn" %></p>
+</section>

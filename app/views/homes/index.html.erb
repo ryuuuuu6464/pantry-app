@@ -1,0 +1,15 @@
+<section class="section">
+  <h1 class="home-title">Pantryへようこそ</h1>
+  <p class="section-subtitle">家庭用の在庫管理で買い物を効率化しよう!</p>
+
+  <div class="home-main">
+    <%= image_tag "tissue-paper.png", alt: "ティッシュペーパーのイラスト", class: "tissue-paper-image" %>
+    <%= image_tag "shopping.png", alt: "買い物のイラスト", class: "shopping-image" %>
+
+    <div class="home-btns">
+      <%= link_to "新規登録", new_user_registration_path, class: "link-btn" %>
+      <%= link_to "ログイン", new_user_session_path, class: "link-btn" %>
+      <%= link_to "ゲストログイン", users_guest_sign_in_path, class: "link-btn", data: { turbo_method: :post } %>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,51 @@
+<% content_for :title, "アイテム" %>
+
+<section class="section">
+  <h2 class="section-title">アイテム一覧</h2>
+
+  <div class="item-filter">
+    <%= form_with url: items_path, method: :get, class: "item-filter-form" do %>
+      <%= label_tag :category_id, "カテゴリ", class: "item-filter-label" %>
+      <%= select_tag :category_id, options_from_collection_for_select(@categories, :id, :name, params[:category_id]), include_blank: "すべて", class: "item-filter-select" %>
+      <%= submit_tag "絞り込む", class: "item-filter-submit" %>
+    <% end %>
+  </div>
+
+  <div class="item-list-card">
+    <% if @items.empty? %>
+      <p>アイテムがありません。</p>
+    <% else %>
+      <ul class="item-list">
+        <% @items.each do |item| %>
+          <% inventory = @inventories[item.id] %>
+          <li class="item-list-item">
+            <div class="item-main">
+              <span class="item-name"><%= item.name %></span>
+              <span class="item-category">（カテゴリー: <%= item.category.name %>）</span>
+            </div>
+            
+            <div class="item-stock-controls">
+              <% if inventory.present? %>
+                <%= button_to "-", inventory_path(inventory), method: :patch, params: { inventory: { quantity: [inventory.quantity - 1, 0].max } }, class: "stock-btn stock-btn-minus" %>
+                <span class="item-stock-value"><%= inventory.quantity %></span>
+                <%= button_to "+", inventory_path(inventory), method: :patch, params: { inventory: { quantity: inventory.quantity + 1 } }, class: "stock-btn" %>
+              <% else %>
+                <span class="item-stock-value">0</span>
+              <% end %>
+            </div>
+
+            <div class="item-list-actions">
+              <%= link_to edit_item_path(item), class: "list-edit-btn" do %>
+                <%= image_tag "edit-icon.svg", alt: "編集アイコン", class: "list-edit-icon" %>
+              <% end %>
+              <%= link_to item_path(item), class: "list-delete-btn", data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" } do %>
+                <%= image_tag "delete-icon.svg", alt: "削除アイコン", class: "list-delete-icon" %>
+              <% end %>
+            </div>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  </div>
+  <p><%= link_to "アイテムを作成", new_item_path, class: "link-btn" %></p>
+</section>

@@ -1,0 +1,11 @@
+<% content_for :title, "カテゴリ作成" %>
+
+<section class="section">
+  <h2 class="section-title">カテゴリ作成</h2>
+  <%= form_with model: @category, html: { class: "input-form" } do |f| %>
+    <div><%= f.label :name, "カテゴリ名" %></div>
+    <div><%= f.text_field :name %></div>
+    <div class="actions"><%= f.submit "作成する", class: "submit-btn" %></div>
+  <% end %>
+  <p><%= link_to "戻る", categories_path %></p>
+</section>

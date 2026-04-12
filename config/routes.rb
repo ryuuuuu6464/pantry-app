@@ -1,4 +1,21 @@
 Rails.application.routes.draw do
+  root "homes#index"
+
+  resource :dashboard, only: [ :show ]
+  resource :group, only: [ :new, :create, :edit, :update ] do
+    get :navigation
+    get :join
+    patch :join, action: :join_by_token
+    delete :leave
+  end
+  resources :categories
+  resources :items
+  resources :inventories, only: [ :update ]
+
+  devise_for :users, controllers: {
+    registrations: "users/registrations",
+    passwords: "users/passwords"
+  }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -11,4 +28,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+  devise_scope :user do
+    post "/users/guest_sign_in", to: "users/sessions#new_guest"
+  end
 end

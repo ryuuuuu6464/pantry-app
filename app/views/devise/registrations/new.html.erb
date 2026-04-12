@@ -1,0 +1,40 @@
+<% content_for :title, "新規登録" %>
+
+<section>
+  <h2 class="section-title"><%= t(".sign_up") %></h2>
+
+  <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: "input-form" }) do |f| %>
+    <%= render "devise/shared/error_messages", resource: resource %>
+
+    <div class="field">
+      <p><%= f.label :name %></p>
+      <p><%= f.text_field :name, autocomplete: "name" %></p>
+    </div>
+
+    <div class="field">
+      <p><%= f.label :email %></p>
+      <p><%= f.email_field :email, autofocus: true, autocomplete: "email" %></p>
+    </div>
+
+    <div class="field">
+      <p>
+        <span><%= f.label :password %></span>
+        <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> 文字以上)</em>
+        <% end %>
+      </p>
+      <p><%= f.password_field :password, autocomplete: "new-password" %></p>
+    </div>
+
+    <div class="field">
+      <p><%= f.label :password_confirmation %></p>
+      <p><%= f.password_field :password_confirmation, autocomplete: "new-password" %></p>
+    </div>
+
+    <div class="actions">
+      <%= f.submit t(".sign_up"), class: "submit-btn" %>
+    </div>
+  <% end %>
+
+  <%= render "devise/shared/links" %>
+</section>
