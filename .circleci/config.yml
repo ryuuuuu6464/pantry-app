@@ -88,7 +88,7 @@ jobs:
       - attach_workspace:
           at: ~/project
       - run:
-          name: Debug: show git settings
+          name: "Debug: show git settings"
           command: |
             git remote -v
             git config --global --list || true
