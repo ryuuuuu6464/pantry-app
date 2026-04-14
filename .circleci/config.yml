@@ -88,19 +88,18 @@ jobs:
       - attach_workspace:
           at: ~/project
       - run:
-          name: "Debug: show git settings"
+          name: Prepare git for non-interactive deploy
           command: |
-            git remote -v
-            git config --global --list || true
-            git config --system --list || true
-            git config --local --list || true
+            git remote set-url origin https://github.com/ryuuuuu6464/pantry-app.git
+            mkdir -p ~/.ssh
+            if command -v ssh-keyscan >/dev/null 2>&1; then
+              ssh-keyscan github.com >> ~/.ssh/known_hosts
+            fi
+            export HUSKY=0
       - run:
-          name: Normalize git URL and prevent interactive prompt
+          name: Deploy to Heroku
           command: |
-            git config --global url."https://github.com/".insteadOf git@github.com:
-            git config --global url."https://github.com/".insteadOf ssh://git@github.com/
-            export GIT_TERMINAL_PROMPT=0
-            git push https://heroku:$HEROKU_API_KEY@git.heroku.com/$HEROKU_APP_NAME.git HEAD:main
+            GIT_TERMINAL_PROMPT=0 HUSKY=0 git push --no-verify https://heroku:${HEROKU_API_KEY}@git.heroku.com/${HEROKU_APP_NAME}.git HEAD:main
 
 workflows:
   build_rubocop_rspec_deploy:
