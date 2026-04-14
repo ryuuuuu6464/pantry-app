@@ -439,6 +439,7 @@ p {
 /* 新規登録画面 */
 .input-form {
   width: 220px;
+  margin: 0 auto;
   text-align: center;
   justify-self: center;
   font-size: 18px;
